@@ -31,7 +31,38 @@ Action ComportamientoJugador::think(Sensores sensores){
 	cout << endl;
 
 
-	// Determinar el efecto de la ultima accion enviada
+	switch(ultimaAccion){
+		case actFORWARD:
+			switch(brujula){
+				case 0: fil--; //Norte
+				case 1: fil++; //Sur
+				case 2: col++; //Este
+				case 3: col--; //Oeste
+			}
+			break;
+		case actTURN_L:
+			brujula = (brujula +3) % 4;
+			girar_derecha = (rand()%2 == 0);
+			break;
+		case actTURN_R:
+			brujula = (brujula + 1) % 4;
+			girar_derecha = (rand()%2 == 0);
+			break;
+	}
+
+	//DECIDIR NUEVA ACCIÓN
+	if( ( sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S') and sensores.superficie[2] == '_'){
+		accion = actFORWARD;
+	}
+	else if(!girar_derecha){
+		accion = actTURN_L;
+	}
+	else{
+		accion = actTURN_R;
+	}
+
+	//Recordar ultima accion
+	ultimaAccion = accion;
 	return accion;
 }
 

@@ -8,8 +8,10 @@ class ComportamientoJugador : public Comportamiento{
 
   public:
     ComportamientoJugador(unsigned int size) : Comportamiento(size){
-      // Constructor de la clase
-      // Dar el valor inicial a las variables de estado
+      girar_derecha = false;
+      fil = col = 99;
+      brujula = 0;
+      ultimaAccion = actIDLE;
     }
 
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
@@ -19,6 +21,9 @@ class ComportamientoJugador : public Comportamiento{
     int interact(Action accion, int valor);
 
   private:
+    bool girar_derecha;
+    int fil, col, brujula;
+    Action ultimaAccion;
   
   // Declarar aquí las variables de estado
 
