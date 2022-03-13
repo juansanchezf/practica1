@@ -8,7 +8,7 @@ class ComportamientoJugador : public Comportamiento{
 
   public:
     ComportamientoJugador(unsigned int size) : Comportamiento(size){
-      girar_derecha = false;
+      girar_derecha = bien_situado = false;
       fil = col = 99;
       brujula = 0;
       ultimaAccion = actIDLE;
@@ -21,7 +21,7 @@ class ComportamientoJugador : public Comportamiento{
     int interact(Action accion, int valor);
 
   private:
-    bool girar_derecha;
+    bool girar_derecha, bien_situado;
     int fil, col, brujula;
     Action ultimaAccion;
   
