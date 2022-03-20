@@ -8,9 +8,9 @@ class ComportamientoJugador : public Comportamiento{
 
   public:
     ComportamientoJugador(unsigned int size) : Comportamiento(size){
-      girar_derecha = bien_situado = false;
       fil = col = 99;
       brujula = 0;
+      girar_derecha = bien_situado = false;
       ultimaAccion = actIDLE;
     }
 
@@ -21,8 +21,8 @@ class ComportamientoJugador : public Comportamiento{
     int interact(Action accion, int valor);
 
   private:
-    bool girar_derecha, bien_situado;
     int fil, col, brujula;
+    bool girar_derecha, bien_situado;
     Action ultimaAccion;
   
   // Declarar aquí las variables de estado

@@ -8,27 +8,28 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	Action accion = actIDLE;
 
-	//ACTUALIZAR CONOCIMIENTO
+	////////Actualizar conocimiento////////
 	switch(ultimaAccion){
 		case actFORWARD:
 			switch(brujula){
-				case 0: fil--; //Norte
-				case 1: col++; //Sur
-				case 2: fil++; //Este
-				case 3: col--; //Oeste
+				case 0: fil--; break; //Norte
+				case 1: col++; break; //Este
+				case 2: fil++; break; //Sur
+				case 3: col--; break; //Oeste
 			}
 			break;
 		case actTURN_L:
-			brujula = (brujula + 3) % 4;
-			girar_derecha = (rand()%2 == 0);
+			brujula = (brujula+3)%4;
+			girar_derecha = (rand()%2==0);
 			break;
 		case actTURN_R:
-			brujula = (brujula + 1) % 4;
-			girar_derecha = (rand()%2 == 0);
+			brujula = (brujula+1)%4;
+			girar_derecha = (rand()%2==0);
 			break;
+
 	}
 
-	if(sensores.terreno[0] == 'G' and !bien_situado){
+	if ((sensores.terreno[0]=='G') and !bien_situado){
 		fil = sensores.posF;
 		col = sensores.posC;
 		bien_situado = true;
@@ -38,9 +39,9 @@ Action ComportamientoJugador::think(Sensores sensores){
 		mapaResultado[fil][col] = sensores.terreno[0];
 	}
 
-	//DECIDIR NUEVA ACCIÓN
-	if( ( sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S' or sensores.terreno[2] == 'G') 
-		and sensores.superficie[2] == '_'){
+	////////Decididir siguiente movimiento////////
+	if( (sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S' or sensores.terreno[2] == 'G') and 
+	sensores.superficie[2] == '_'){
 		accion = actFORWARD;
 	}
 	else if(!girar_derecha){
@@ -50,7 +51,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 		accion = actTURN_R;
 	}
 
-	//Recordar ultima accion
+	////////Recordar ultima accion////////
 	ultimaAccion = accion;
 	return accion;
 }
