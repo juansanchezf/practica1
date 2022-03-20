@@ -11,6 +11,7 @@ class ComportamientoJugador : public Comportamiento{
       fil = col = 99;
       brujula = 0;
       girar_derecha = bien_situado = false;
+      tiene_zapatillas = false;
       ultimaAccion = actIDLE;
     }
 
@@ -23,6 +24,7 @@ class ComportamientoJugador : public Comportamiento{
   private:
     int fil, col, brujula;
     bool girar_derecha, bien_situado;
+    bool tiene_zapatillas;
     Action ultimaAccion;
   
   // Declarar aquí las variables de estado

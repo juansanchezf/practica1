@@ -35,13 +35,17 @@ Action ComportamientoJugador::think(Sensores sensores){
 		bien_situado = true;
 	}
 
+	if( sensores.terreno[0] == 'D'){
+		tiene_zapatillas = true;
+	}
+
 	if(bien_situado){
 		mapaResultado[fil][col] = sensores.terreno[0];
 	}
 
 	////////Decididir siguiente movimiento////////
-	if( (sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S' or sensores.terreno[2] == 'G') and 
-	sensores.superficie[2] == '_'){
+	if( (sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S' or sensores.terreno[2] == 'G' or sensores.terreno[2] == 'D' or
+		(sensores.terreno[2]=='B' and tiene_zapatillas) ) and sensores.superficie[2] == '_'){
 		accion = actFORWARD;
 	}
 	else if(!girar_derecha){
