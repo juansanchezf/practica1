@@ -11,8 +11,9 @@ class ComportamientoJugador : public Comportamiento{
       fil = col = 99;
       brujula = 0;
       girar_derecha = bien_situado = false;
-      tiene_zapatillas = false;
+      tiene_zapatillas = tiene_bikini = false;
       ultimaAccion = actIDLE;
+      en_linea = 0;
     }
 
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
@@ -24,7 +25,8 @@ class ComportamientoJugador : public Comportamiento{
   private:
     int fil, col, brujula;
     bool girar_derecha, bien_situado;
-    bool tiene_zapatillas;
+    bool tiene_zapatillas, tiene_bikini;
+    int en_linea;
     Action ultimaAccion;
   
   // Declarar aquí las variables de estado

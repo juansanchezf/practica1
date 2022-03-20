@@ -38,21 +38,27 @@ Action ComportamientoJugador::think(Sensores sensores){
 	if( sensores.terreno[0] == 'D'){
 		tiene_zapatillas = true;
 	}
+	else if(sensores.terreno[0] == 'K'){
+		tiene_bikini = true;
+	}
 
 	if(bien_situado){
 		mapaResultado[fil][col] = sensores.terreno[0];
 	}
 
 	////////Decididir siguiente movimiento////////
-	if( (sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S' or sensores.terreno[2] == 'G' or sensores.terreno[2] == 'D' or
-		(sensores.terreno[2]=='B' and tiene_zapatillas) ) and sensores.superficie[2] == '_'){
+	if( (sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S' or sensores.terreno[2] == 'G' or sensores.terreno[2] == 'D' or sensores.terreno[2] == 'K' or
+		(sensores.terreno[2]=='B' and tiene_zapatillas) or (sensores.terreno[2] == 'A' and tiene_bikini) ) and sensores.superficie[2] == '_' and en_linea < 5){
 		accion = actFORWARD;
+		en_linea++;
 	}
 	else if(!girar_derecha){
 		accion = actTURN_L;
+		en_linea = 0;
 	}
 	else{
 		accion = actTURN_R;
+		en_linea = 0;
 	}
 
 	////////Recordar ultima accion////////
