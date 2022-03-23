@@ -48,23 +48,6 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 
 	if(bien_situado){
-		/*switch(brujula){
-			case 0:
-				int sensor = 0;
-				for(int i = 0; i < 4; i++){
-					for(int j = -i; j<i; j++){
-						mapaResultado[fil+i][col+j] = sensores.terreno[sensor];
-					}
-				}
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-		}*/
-
 		switch(brujula){
 			case 0:{	//Norte
 				int sensor = 0;
@@ -112,7 +95,6 @@ Action ComportamientoJugador::think(Sensores sensores){
 			}
 			break;
 		}
-	
 	}
 
 	////////Decididir siguiente movimiento////////
