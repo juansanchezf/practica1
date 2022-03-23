@@ -42,6 +42,8 @@ Action ComportamientoJugador::think(Sensores sensores){
 		tiene_bikini = true;
 	}
 
+
+
 	if(bien_situado){
 		mapaResultado[fil][col] = sensores.terreno[0];
 	}
@@ -63,6 +65,8 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	////////Recordar ultima accion////////
 	ultimaAccion = accion;
+
+
 	return accion;
 }
 
