@@ -29,7 +29,10 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	}
 
-	if ((sensores.terreno[0]=='G') and !bien_situado){
+	nivel = sensores.nivel;
+
+	if ((sensores.terreno[0]=='G' || nivel == 0) and !bien_situado){
+		brujula = sensores.sentido ; 
 		fil = sensores.posF;
 		col = sensores.posC;
 		bien_situado = true;
@@ -45,7 +48,71 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 
 	if(bien_situado){
-		mapaResultado[fil][col] = sensores.terreno[0];
+		/*switch(brujula){
+			case 0:
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j = -i; j<i; j++){
+						mapaResultado[fil+i][col+j] = sensores.terreno[sensor];
+					}
+				}
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+		}*/
+
+		switch(brujula){
+			case 0:{	//Norte
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j = -i; j<=i; j++){
+						mapaResultado[fil-i][col+j] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
+			break;
+
+			case 1:{	//Este
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j =-i; j<=i; j++){
+						mapaResultado[fil+j][col+i] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
+			break; 
+
+			case 2: //Sur
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j =-i; j<=i; j++){
+						mapaResultado[fil+i][col-j] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
+			break; 
+
+			case 3://Oeste
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j =-i; j<=i; j++){
+						mapaResultado[fil-j][col-i] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
+			break;
+		}
+	
 	}
 
 	////////Decididir siguiente movimiento////////

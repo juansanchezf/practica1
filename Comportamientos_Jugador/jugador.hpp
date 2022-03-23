@@ -14,6 +14,7 @@ class ComportamientoJugador : public Comportamiento{
       tiene_zapatillas = tiene_bikini = false;
       ultimaAccion = actIDLE;
       en_linea = 0;
+      nivel = -1;
     }
 
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
@@ -27,6 +28,7 @@ class ComportamientoJugador : public Comportamiento{
     bool girar_derecha, bien_situado;
     bool tiene_zapatillas, tiene_bikini;
     int en_linea;
+    int nivel;
     Action ultimaAccion;
   
   // Declarar aquí las variables de estado
