@@ -36,6 +36,9 @@ Action ComportamientoJugador::think(Sensores sensores){
 		fil = sensores.posF;
 		col = sensores.posC;
 		bien_situado = true;
+		for(int i = 0; i < mapaResultado.size(); i++){
+			mapaAuxiliar.push_back(mapaResultado[i]);
+		}
 	}
 
 	if( sensores.terreno[0] == 'D'){
@@ -95,6 +98,22 @@ Action ComportamientoJugador::think(Sensores sensores){
 			}
 			break;
 		}
+	}
+	else{
+		switch(brujula){
+			case 0://Norte
+			break;
+
+			case 1: //Este
+			break; 
+
+			case 2: //Sur
+			break; 
+
+			case 3://Oeste
+			break;
+		}
+
 	}
 
 	////////Decididir siguiente movimiento////////

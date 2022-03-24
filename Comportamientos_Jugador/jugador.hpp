@@ -30,6 +30,7 @@ class ComportamientoJugador : public Comportamiento{
     int en_linea;
     int nivel;
     Action ultimaAccion;
+    vector< vector< unsigned char> > mapaAuxiliar;
   
   // Declarar aquí las variables de estado
 
