@@ -16,7 +16,8 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 		if(nivel != 0){
 
-			//Creo un mapa auxiliar el doble de grande que el mapa (Solo si es un nivel superior al 0)
+			//Creo un mapa auxiliar el doble de grande que el mapa (Solo si es un nivel superior al 0) ya que en el
+			//nivel 0 no es necesario usar un mapa auxiliar
 			for(int i = 0; i < mapaResultado.size(); i++){
 				mapaAuxiliar.push_back(mapaResultado[i]);
 				mapaAuxiliar.push_back(mapaResultado[i]);
@@ -28,19 +29,49 @@ Action ComportamientoJugador::think(Sensores sensores){
 			fil_aux = col_aux = mapaResultado.size()-1;
 		}
 		
+		cout << "Mapa resultado: " << fil << " " << col << endl;
+		cout << "Mapa auxiliar: " << fil_aux << " " << col_aux << endl;
 		primer_paso = false;
 	}
-
+	///////////////////////////////////////////////////////////////////////////////////
 
 
 	////////Actualizar conocimiento////////
 	switch(ultimaAccion){
 		case actFORWARD:
 			switch(brujula){
-				case 0: fil--; break; //Norte
-				case 1: col++; break; //Este
-				case 2: fil++; break; //Sur
-				case 3: col--; break; //Oeste
+				case 0: //Norte
+				{
+					if(bien_situado)
+						fil--;
+					else
+						fil_aux--;
+				}
+				break;
+				case 1: //Este
+				{
+					if(bien_situado)
+						col++;
+					else
+						col_aux++;
+				}
+				break;
+				case 2: //Sur
+				{
+					if(bien_situado)
+						fil++;
+					else
+						fil_aux++;
+				} 
+				break;
+				case 3: //Oeste
+				{
+					if(bien_situado)
+						col--;
+					else
+						col_aux--;
+				}
+				break;
 			}
 			break;
 		case actTURN_L:
@@ -63,6 +94,18 @@ Action ComportamientoJugador::think(Sensores sensores){
 		bien_situado = true;
 
 		if(nivel == 1){
+			int despl_fil = fil_aux - fil;
+			int despl_col = col_aux - col;
+
+			cout << "POSICION DE LA CASILLA AZUL: " << fil << " " << col << endl;
+			cout << "DESPLAZAMIENTO FILA " << despl_fil << " COLUMNA " << despl_col << endl;
+
+			for(int i = 0; i < mapaResultado.size(); i++){
+				for(int j = 0; j < mapaResultado.size(); j++){
+					cout << "Posicion en el mapa resultado " << i << " " << j << ": " << mapaAuxiliar[i+despl_fil][j+despl_col] << endl;
+					mapaResultado[i][j] = mapaAuxiliar[i+despl_fil][j+despl_col];
+				}
+			}
 			
 
 		}
@@ -130,56 +173,57 @@ Action ComportamientoJugador::think(Sensores sensores){
 		}
 	}
 	else{
-		switch(brujula){
-			case 0://Norte
-			{
-				int sensor = 0;
-				for(int i = 0; i < 4; i++){
-					for(int j = -i; j<=i; j++){
-						mapaAuxiliar[fil_aux-i][col_aux+j] = sensores.terreno[sensor];
-						sensor++;
+		if(nivel < 2){
+			switch(brujula){
+				case 0://Norte
+				{
+					int sensor = 0;
+					for(int i = 0; i < 4; i++){
+						for(int j = -i; j<=i; j++){
+							mapaAuxiliar[fil_aux-i][col_aux+j] = sensores.terreno[sensor];
+							sensor++;
+						}
 					}
 				}
-			}
-			break;
+				break;
 
-			case 1: //Este
-			{
-				int sensor = 0;
-				for(int i = 0; i < 4; i++){
-					for(int j =-i; j<=i; j++){
-						mapaAuxiliar[fil+j][col+i] = sensores.terreno[sensor];
-						sensor++;
+				case 1: //Este
+				{
+					int sensor = 0;
+					for(int i = 0; i < 4; i++){
+						for(int j =-i; j<=i; j++){
+							mapaAuxiliar[fil_aux+j][col_aux+i] = sensores.terreno[sensor];
+							sensor++;
+						}
 					}
 				}
-			}
-			break; 
+				break; 
 
-			case 2: //Sur
-			{
-				int sensor = 0;
-				for(int i = 0; i < 4; i++){
-					for(int j =-i; j<=i; j++){
-						mapaAuxiliar[fil+i][col-j] = sensores.terreno[sensor];
-						sensor++;
+				case 2: //Sur
+				{
+					int sensor = 0;
+					for(int i = 0; i < 4; i++){
+						for(int j =-i; j<=i; j++){
+							mapaAuxiliar[fil_aux+i][col_aux-j] = sensores.terreno[sensor];
+							sensor++;
+						}
 					}
 				}
-			}
-			break; 
+				break; 
 
-			case 3://Oeste
-			{
-				int sensor = 0;
-				for(int i = 0; i < 4; i++){
-					for(int j =-i; j<=i; j++){
-						mapaResultado[fil-j][col-i] = sensores.terreno[sensor];
-						sensor++;
+				case 3://Oeste
+				{
+					int sensor = 0;
+					for(int i = 0; i < 4; i++){
+						for(int j =-i; j<=i; j++){
+							mapaAuxiliar[fil_aux-j][col_aux-i] = sensores.terreno[sensor];
+							sensor++;
+						}
 					}
 				}
+				break;
 			}
-			break;
 		}
-
 	}
 
 	////////Decididir siguiente movimiento////////
