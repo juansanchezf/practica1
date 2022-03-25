@@ -61,7 +61,13 @@ Action ComportamientoJugador::think(Sensores sensores){
 		fil = sensores.posF;
 		col = sensores.posC;
 		bien_situado = true;
+
+		if(nivel == 1){
+			
+
+		}
 	}
+	
 
 
 	if( sensores.terreno[0] == 'D'){
@@ -138,12 +144,39 @@ Action ComportamientoJugador::think(Sensores sensores){
 			break;
 
 			case 1: //Este
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j =-i; j<=i; j++){
+						mapaAuxiliar[fil+j][col+i] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
 			break; 
 
 			case 2: //Sur
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j =-i; j<=i; j++){
+						mapaAuxiliar[fil+i][col-j] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
 			break; 
 
 			case 3://Oeste
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j =-i; j<=i; j++){
+						mapaResultado[fil-j][col-i] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
 			break;
 		}
 
