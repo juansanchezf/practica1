@@ -8,6 +8,31 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	Action accion = actIDLE;
 
+
+
+	///////////////ACCIONES QUE SOLO REALIZARÉ EN LA PRIMERA ITERACIÓN DEL PROGRAMA///////
+	if(primer_paso){
+		nivel = sensores.nivel;
+
+		if(nivel != 0){
+
+			//Creo un mapa auxiliar el doble de grande que el mapa (Solo si es un nivel superior al 0)
+			for(int i = 0; i < mapaResultado.size(); i++){
+				mapaAuxiliar.push_back(mapaResultado[i]);
+				mapaAuxiliar.push_back(mapaResultado[i]);
+			}
+
+			//Las componentes con las que recorreré dicha matriz serán las correspondientes al
+			//valor mas grande del mapaResultado, que en nuestro nueva matriz serán aproximadamente
+			//el centro de la misma.
+			fil_aux = col_aux = mapaResultado.size()-1;
+		}
+		
+		primer_paso = false;
+	}
+
+
+
 	////////Actualizar conocimiento////////
 	switch(ultimaAccion){
 		case actFORWARD:
@@ -29,21 +54,20 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	}
 
-	nivel = sensores.nivel;
+	
 
 	if ((sensores.terreno[0]=='G' || nivel == 0) and !bien_situado){
 		brujula = sensores.sentido ; 
 		fil = sensores.posF;
 		col = sensores.posC;
 		bien_situado = true;
-		for(int i = 0; i < mapaResultado.size(); i++){
-			mapaAuxiliar.push_back(mapaResultado[i]);
-		}
 	}
+
 
 	if( sensores.terreno[0] == 'D'){
 		tiene_zapatillas = true;
 	}
+
 	else if(sensores.terreno[0] == 'K'){
 		tiene_bikini = true;
 	}
@@ -102,6 +126,15 @@ Action ComportamientoJugador::think(Sensores sensores){
 	else{
 		switch(brujula){
 			case 0://Norte
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j = -i; j<=i; j++){
+						mapaAuxiliar[fil_aux-i][col_aux+j] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
 			break;
 
 			case 1: //Este

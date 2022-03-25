@@ -15,6 +15,7 @@ class ComportamientoJugador : public Comportamiento{
       ultimaAccion = actIDLE;
       en_linea = 0;
       nivel = -1;
+      primer_paso = true;
     }
 
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
@@ -25,12 +26,14 @@ class ComportamientoJugador : public Comportamiento{
 
   private:
     int fil, col, brujula;
+    int fil_aux, col_aux;
     bool girar_derecha, bien_situado;
     bool tiene_zapatillas, tiene_bikini;
     int en_linea;
     int nivel;
     Action ultimaAccion;
     vector< vector< unsigned char> > mapaAuxiliar;
+    bool primer_paso;
   
   // Declarar aquí las variables de estado
 
