@@ -23,6 +23,12 @@ Action ComportamientoJugador::think(Sensores sensores){
 				mapaAuxiliar.push_back(mapaResultado[i]);
 			}
 
+			for(int i = 0; i < mapaAuxiliar.size(); i++){
+				for(int j = 0; j < mapaAuxiliar[i].size(); j++){
+					mapaAuxiliar[i][j] = '?';
+				}
+			}
+
 			//Las componentes con las que recorreré dicha matriz serán las correspondientes al
 			//valor mas grande del mapaResultado, que en nuestro nueva matriz serán aproximadamente
 			//el centro de la misma.
@@ -102,8 +108,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 			for(int i = 0; i < mapaResultado.size(); i++){
 				for(int j = 0; j < mapaResultado.size(); j++){
-					cout << "Posicion en el mapa resultado " << i << " " << j << ": " << mapaAuxiliar[i+despl_fil][j+despl_col] << endl;
-					mapaResultado[i][j] = mapaAuxiliar[i+despl_fil][j+despl_col];
+					mapaResultado[i][j] = mapaAuxiliar[i+despl_fil-1][j+despl_col-1];
 				}
 			}
 			
