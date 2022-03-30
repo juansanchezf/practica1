@@ -13,30 +13,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 	///////////////ACCIONES QUE SOLO REALIZARÉ EN LA PRIMERA ITERACIÓN DEL PROGRAMA///////
 	if(primer_paso){
 		nivel = sensores.nivel;
-
-		if(nivel != 0){
-
-			//Creo un mapa auxiliar el doble de grande que el mapa (Solo si es un nivel superior al 0) ya que en el
-			//nivel 0 no es necesario usar un mapa auxiliar
-			for(int i = 0; i < mapaResultado.size(); i++){
-				mapaAuxiliar.push_back(mapaResultado[i]);
-				mapaAuxiliar.push_back(mapaResultado[i]);
-			}
-
-			for(int i = 0; i < mapaAuxiliar.size(); i++){
-				for(int j = 0; j < mapaAuxiliar[i].size(); j++){
-					mapaAuxiliar[i][j] = '?';
-				}
-			}
-
-			//Las componentes con las que recorreré dicha matriz serán las correspondientes al
-			//valor mas grande del mapaResultado, que en nuestro nueva matriz serán aproximadamente
-			//el centro de la misma.
-			fil_aux = col_aux = mapaResultado.size()-1;
-		}
-		
-		cout << "Mapa resultado: " << fil << " " << col << endl;
-		cout << "Mapa auxiliar: " << fil_aux << " " << col_aux << endl;
+		fil_aux = col_aux = mapaResultado.size()-1;
 		primer_paso = false;
 	}
 	///////////////////////////////////////////////////////////////////////////////////
@@ -91,15 +68,19 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	}
 
-	
+	if(sensores.reset){
+		bien_situado = false;
+		brujula = 0;
+	}
 
 	if ((sensores.terreno[0]=='G' || nivel == 0) and !bien_situado){
 		brujula = sensores.sentido ; 
 		fil = sensores.posF;
 		col = sensores.posC;
+		brujula = sensores.sentido;
 		bien_situado = true;
 
-		if(nivel == 1){
+		if(nivel != 0){
 			int despl_fil = fil_aux - fil;
 			int despl_col = col_aux - col;
 
@@ -108,14 +89,13 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 			for(int i = 0; i < mapaResultado.size(); i++){
 				for(int j = 0; j < mapaResultado.size(); j++){
-					mapaResultado[i][j] = mapaAuxiliar[i+despl_fil-1][j+despl_col-1];
+					mapaResultado[i][j] = mapaAuxiliar[i+despl_fil][j+despl_col];
 				}
 			}
 			
 
 		}
 	}
-	
 
 
 	if( sensores.terreno[0] == 'D'){
@@ -125,7 +105,6 @@ Action ComportamientoJugador::think(Sensores sensores){
 	else if(sensores.terreno[0] == 'K'){
 		tiene_bikini = true;
 	}
-
 
 
 	if(bien_situado){
@@ -178,56 +157,54 @@ Action ComportamientoJugador::think(Sensores sensores){
 		}
 	}
 	else{
-		if(nivel < 2){
-			switch(brujula){
-				case 0://Norte
-				{
-					int sensor = 0;
-					for(int i = 0; i < 4; i++){
-						for(int j = -i; j<=i; j++){
-							mapaAuxiliar[fil_aux-i][col_aux+j] = sensores.terreno[sensor];
-							sensor++;
-						}
+		switch(brujula){
+			case 0://Norte
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j = -i; j<=i; j++){
+						mapaAuxiliar[fil_aux-i][col_aux+j] = sensores.terreno[sensor];
+						sensor++;
 					}
 				}
-				break;
-
-				case 1: //Este
-				{
-					int sensor = 0;
-					for(int i = 0; i < 4; i++){
-						for(int j =-i; j<=i; j++){
-							mapaAuxiliar[fil_aux+j][col_aux+i] = sensores.terreno[sensor];
-							sensor++;
-						}
-					}
-				}
-				break; 
-
-				case 2: //Sur
-				{
-					int sensor = 0;
-					for(int i = 0; i < 4; i++){
-						for(int j =-i; j<=i; j++){
-							mapaAuxiliar[fil_aux+i][col_aux-j] = sensores.terreno[sensor];
-							sensor++;
-						}
-					}
-				}
-				break; 
-
-				case 3://Oeste
-				{
-					int sensor = 0;
-					for(int i = 0; i < 4; i++){
-						for(int j =-i; j<=i; j++){
-							mapaAuxiliar[fil_aux-j][col_aux-i] = sensores.terreno[sensor];
-							sensor++;
-						}
-					}
-				}
-				break;
 			}
+			break;
+
+			case 1: //Este
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j =-i; j<=i; j++){
+						mapaAuxiliar[fil_aux+j][col_aux+i] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
+			break; 
+
+			case 2: //Sur
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j =-i; j<=i; j++){
+						mapaAuxiliar[fil_aux+i][col_aux-j] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
+			break; 
+
+			case 3://Oeste
+			{
+				int sensor = 0;
+				for(int i = 0; i < 4; i++){
+					for(int j =-i; j<=i; j++){
+						mapaAuxiliar[fil_aux-j][col_aux-i] = sensores.terreno[sensor];
+						sensor++;
+					}
+				}
+			}
+			break;
 		}
 	}
 

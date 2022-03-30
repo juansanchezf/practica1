@@ -16,6 +16,10 @@ class ComportamientoJugador : public Comportamiento{
       en_linea = 0;
       nivel = -1;
       primer_paso = true;
+      vector<unsigned char> aux(200,'?');
+      for(int i = 0; i < 200; i++){
+        mapaAuxiliar.push_back(aux);
+      }
     }
 
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
