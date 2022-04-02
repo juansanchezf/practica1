@@ -84,9 +84,6 @@ Action ComportamientoJugador::think(Sensores sensores){
 			int despl_fil = fil_aux - fil;
 			int despl_col = col_aux - col;
 
-			cout << "POSICION DE LA CASILLA AZUL: " << fil << " " << col << endl;
-			cout << "DESPLAZAMIENTO FILA " << despl_fil << " COLUMNA " << despl_col << endl;
-
 			for(int i = 0; i < mapaResultado.size(); i++){
 				for(int j = 0; j < mapaResultado.size(); j++){
 					mapaResultado[i][j] = mapaAuxiliar[i+despl_fil][j+despl_col];
@@ -213,6 +210,12 @@ Action ComportamientoJugador::think(Sensores sensores){
 		(sensores.terreno[2]=='B' and tiene_zapatillas) or (sensores.terreno[2] == 'A' and tiene_bikini) ) and sensores.superficie[2] == '_' and en_linea < 5){
 		accion = actFORWARD;
 		en_linea++;
+	}
+	else if( !tiene_zapatillas and sensores.terreno[0] == 'B' and (sensores.terreno[2] != 'B' or sensores.terreno[6] != 'B' or sensores.terreno[12] != 'B') ){
+		accion = actFORWARD;
+	}
+	else if( !tiene_zapatillas and sensores.terreno[0] == 'A' and (sensores.terreno[2] != 'A' or sensores.terreno[6] != 'A' or sensores.terreno[12] != 'A') ){
+		accion = actFORWARD;
 	}
 	else if(!girar_derecha){
 		accion = actTURN_L;

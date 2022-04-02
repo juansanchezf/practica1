@@ -16,9 +16,17 @@ class ComportamientoJugador : public Comportamiento{
       en_linea = 0;
       nivel = -1;
       primer_paso = true;
+
+      //Inicializo el mapaAuxiliar
       vector<unsigned char> aux(200,'?');
       for(int i = 0; i < 200; i++){
         mapaAuxiliar.push_back(aux);
+      }
+
+      //Inicializo el mapaPasado
+      vector<int> ceros(200,0);
+      for(int i = 0; i < 200 ; i++){
+        mapaPasado.push_back(ceros);
       }
     }
 
@@ -37,6 +45,7 @@ class ComportamientoJugador : public Comportamiento{
     int nivel;
     Action ultimaAccion;
     vector< vector< unsigned char> > mapaAuxiliar;
+    vector< vector< int> > mapaPasado;
     bool primer_paso;
   
   // Declarar aquí las variables de estado
