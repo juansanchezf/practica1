@@ -68,13 +68,23 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	}
 
+
 	if(sensores.reset){
 		bien_situado = false;
 		brujula = 0;
+
+		for(int i = 0; i < 200; i++)
+			for(int j = 0; j < 200 ; j++)
+				mapaAuxiliar[i][j] = '?';
+		
+		fil_aux = col_aux = mapaResultado.size()-1;
+		tiene_zapatillas = false;
+		tiene_bikini = false;
 	}
+	
 
 	if ((sensores.terreno[0]=='G' || nivel == 0) and !bien_situado){
-		brujula = sensores.sentido ; 
+		brujula = sensores.sentido; 
 		fil = sensores.posF;
 		col = sensores.posC;
 		brujula = sensores.sentido;
@@ -86,19 +96,16 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 			for(int i = 0; i < mapaResultado.size(); i++){
 				for(int j = 0; j < mapaResultado.size(); j++){
+					
 					mapaResultado[i][j] = mapaAuxiliar[i+despl_fil][j+despl_col];
 				}
 			}
-			
-
 		}
 	}
-
 
 	if( sensores.terreno[0] == 'D'){
 		tiene_zapatillas = true;
 	}
-
 	else if(sensores.terreno[0] == 'K'){
 		tiene_bikini = true;
 	}
