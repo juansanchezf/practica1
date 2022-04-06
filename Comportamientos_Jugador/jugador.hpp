@@ -17,6 +17,16 @@ class ComportamientoJugador : public Comportamiento{
       nivel = -1;
       primer_paso = true;
 
+      //Inicializo el mapaResultado con los precipicios
+      for(int i = 0; i < 3; i++){
+        for(int j = 0; j < mapaResultado.size(); j++){
+          mapaResultado[i][j] = 'P';
+          mapaResultado[j][i] = 'P';
+          mapaResultado[mapaResultado.size()-1-i][j] = 'P';
+          mapaResultado[j][mapaResultado.size()-1-i] = 'P';
+        }
+      }
+
       //Inicializo el mapaAuxiliar
       vector<unsigned char> aux(200,'?');
       for(int i = 0; i < 200; i++){
