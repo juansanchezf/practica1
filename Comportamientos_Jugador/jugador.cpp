@@ -81,7 +81,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 		tiene_zapatillas = false;
 		tiene_bikini = false;
 	}
-	
+
 
 	if ((sensores.terreno[0]=='G' || nivel == 0) and !bien_situado){
 		brujula = sensores.sentido; 
@@ -214,7 +214,7 @@ Action ComportamientoJugador::think(Sensores sensores){
 
 	////////Decididir siguiente movimiento////////
 	if( (sensores.terreno[2] == 'T' or sensores.terreno[2] == 'S' or sensores.terreno[2] == 'G' or sensores.terreno[2] == 'D' or sensores.terreno[2] == 'K' or
-		(sensores.terreno[2]=='B' and tiene_zapatillas) or (sensores.terreno[2] == 'A' and tiene_bikini) ) and sensores.superficie[2] == '_' and en_linea < 5){
+		(sensores.terreno[2]=='B' and tiene_zapatillas) or (sensores.terreno[2] == 'A' and tiene_bikini) ) and sensores.superficie[2] == '_' and (en_linea < 0.2*mapaResultado.size()) ){
 		accion = actFORWARD;
 		en_linea++;
 	}
